@@ -10,7 +10,8 @@ export  const getFeature = (req, res, next ) => {
         })
     } else {
         res.json({
-            data: FeatureData
+            data: FeatureData,
+            accessToken : "abcd"
         })
     }
 }
