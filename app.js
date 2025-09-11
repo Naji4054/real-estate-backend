@@ -5,6 +5,7 @@ import featuresRoutes from './routes/features.routes.js'
 import latestRoutes from './routes/latest.routes.js'
 import orderRoutes from './routes/admin/order.routes.js'
 import agentRoutes from './routes/admin/agents.routes.js'
+import propertyRoutes from './routes/admin/property.routes.js'
 
 
 const app = express()
@@ -17,6 +18,7 @@ app.use('/features', featuresRoutes)
 app.use('/latest', latestRoutes)
 app.use('/admin', orderRoutes)
 app.use('/admin', agentRoutes)
+app.use('/admin', propertyRoutes)
 
 
 

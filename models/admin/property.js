@@ -1,0 +1,62 @@
+export const propertyData =[
+    {
+        id:"A01-1",
+        image:"/images/apartment1.png",
+        title:"Apartment",
+        bedroom:"1",
+        washroom:"1",
+        area:"2500",
+        category:"Apartment",
+        price:"2300$"
+    },
+    {
+        id:"C01-1",
+        image:"/images/office1.png",
+        title:"Office Space",
+        bedroom:"1",
+        washroom:"1",
+        area:"1500",
+        category:"Office",
+        price:"3400$"
+    },
+    {
+        id:"H01-1",
+        image:"/images/house2.png",
+        title:"Mansion",
+        bedroom:"8",
+        washroom:"10",
+        area:"25000",
+        category:"House",
+        price:"3400$"
+    },
+    {
+        id:"V01-1",
+        image:"/images/villa1.png",
+        title:"Luxury Villa",
+        bedroom:"5",
+        washroom:"6",
+        area:"18600",
+        category:"Villa",
+        price:"3400$"
+    },
+    {
+        id:"H02-1",
+        image:"/images/house1.png",
+        title:"House",
+        bedroom:"6",
+        washroom:"7",
+        area:"12000",
+        category:"House",
+        price:"3400$"
+    },
+    {
+        id:"A02-1",
+        image:"/images/familyhome1.png",
+        title:"Family Apartment",
+        bedroom:"2",
+        washroom:"3",
+        area:"3500",
+        category:"Apartment",
+        price:"3400$"
+    }
+]

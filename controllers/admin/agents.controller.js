@@ -2,7 +2,7 @@ import { manageAgents } from "../../models/admin/agents.js";
 
 export const getAgents = (req, res, next ) => {
 
-if (!orderData){
+if (!manageAgents){
     res.status(400).json({
         status: false,
         message: "cannot get order data",
