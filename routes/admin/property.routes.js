@@ -1,7 +1,10 @@
 import { Router } from "express";
-import { getProperty } from "../../controllers/admin/property.controller.js";
+import { getProperty, getPropertyView } from "../../controllers/admin/property.controller.js";
 
 const propertyRoutes = Router()
-propertyRoutes.get('/property',getProperty)
+
+propertyRoutes.get('/',getProperty)
+
+propertyRoutes.get('/view/:id', getPropertyView)
 
 export default propertyRoutes;

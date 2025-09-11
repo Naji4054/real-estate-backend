@@ -18,7 +18,7 @@ app.use('/features', featuresRoutes)
 app.use('/latest', latestRoutes)
 app.use('/admin', orderRoutes)
 app.use('/admin', agentRoutes)
-app.use('/admin', propertyRoutes)
+app.use('/admin/property', propertyRoutes)
 
 
 

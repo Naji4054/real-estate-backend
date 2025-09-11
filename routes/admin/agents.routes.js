@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { getOrder } from "../../controllers/admin/order.controller.js";
+import { getAgents } from "../../controllers/admin/agents.controller.js";
 
 const agentRoutes = Router();
 
-agentRoutes.get('/agents', getOrder)
+agentRoutes.get('/agents', getAgents)
 
 export default agentRoutes;
