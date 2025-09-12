@@ -23,5 +23,5 @@ app.use('/admin/property', propertyRoutes)
 
 
 app.listen(3000, ()=> {
-    console.log('Server is running on 8000')
+    console.log('Server is running on 3000')
 })
