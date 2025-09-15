@@ -1,56 +1,15 @@
-export const LatestData =[
-    {
-        id:1,
-        image:"/images/apartment1.png",
-        title:"Apartment",
-        bedroom:"1",
-        washroom:"1",
-        area:"2500",
-        category:"Apartment"
-    },
-    {
-        id:2,
-        image:"/images/office1.png",
-        title:"Office Space",
-        bedroom:"1",
-        washroom:"1",
-        area:"1500",
-        category:"Office"
-    },
-    {
-        id:3,
-        image:"/images/house2.png",
-        title:"Mansion",
-        bedroom:"8",
-        washroom:"10",
-        area:"25000",
-        category:"House"
-    },
-    {
-        id:4,
-        image:"/images/villa1.png",
-        title:"Luxury Villa",
-        bedroom:"5",
-        washroom:"6",
-        area:"18600",
-        category:"Villa"
-    },
-    {
-        id:5,
-        image:"/images/house1.png",
-        title:"House",
-        bedroom:"6",
-        washroom:"7",
-        area:"12000",
-        category:"House"
-    },
-    {
-        id:6,
-        image:"/images/familyhome1.png",
-        title:"Family Apartment",
-        bedroom:"2",
-        washroom:"3",
-        area:"3500",
-        category:"Apartment"
-    }
-]
+import mongoose from "mongoose"
+
+
+const latestSchema = new mongoose.Schema({
+    image: { type: String, required: true },
+    title: { type: String, required: true },
+    bedroom: { type: Number, default: 0 },
+    washroom: { type: Number, default: 0 },
+    area: { type: Number, default: 0 },
+    category: {type: String, required: true }
+})
+
+const Latest = mongoose.model('Latest', latestSchema)
+
+export default Latest

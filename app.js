@@ -7,20 +7,28 @@ import orderRoutes from './routes/admin/order.routes.js'
 import agentRoutes from './routes/admin/agents.routes.js'
 import propertyRoutes from './routes/admin/property.routes.js'
 import categoriesRoutes from './routes/categories.routes.js'
+import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+import User from './models/user.js'
+import dbConfig from './config/db.js'
 
+dotenv.config();
 
 const app = express()
 
-app.use(cors('*'))
+app.use(cors())
 
+dbConfig()
 
-app.use('/service', serviceRouter)
-app.use('/features', featuresRoutes)
-app.use('/latest', latestRoutes)
+app.use(express.json())
+
+app.use('/api/v1/service', serviceRouter)
+app.use('/api/v1/features', featuresRoutes)
+app.use('/api/v1/latest', latestRoutes)
 app.use('/categories', categoriesRoutes)
-app.use('/admin', orderRoutes)
-app.use('/admin', agentRoutes)
-app.use('/admin/property', propertyRoutes)
+app.use('/api/v1/admin', orderRoutes)
+app.use('/api/v1/admin', agentRoutes)
+app.use('/api/v1/admin/property', propertyRoutes)
 
 
 
