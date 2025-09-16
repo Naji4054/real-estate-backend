@@ -5,7 +5,7 @@ import Latest from '../models/latest.js'
 
 export const getAllLatest = async (req, res, next) =>{
     try {
-        const data = await Latest.findOneAndUpdate({ bedroom: 1, washroom: 1 }, { title: 'updated title'})
+        const data = await Latest.find({ })
         res.status(201).json({
             status: true,
             message: '',
@@ -63,3 +63,30 @@ export const addLatest = async (req, res, next) => {
     }
 }
 
+export const deleteLatest = async (req, res, next) => {
+    try {
+        const {id} = req.params;
+        const deleteData = await Latest.findByIdAndDelete(id);
+        if(!deleteData){
+            res.status(404).json({
+                status: false,
+                message:"data not found",
+                data: null
+
+            })
+        } else {
+            res.status(200).json({
+                status: true,
+                message: "deleted successfully",
+                data : deleteData
+            })
+        }
+    }catch(error) {
+        console.log(error)
+        res.status(500).json({
+            status: false,
+            message: 'Internal server error',
+            data: null
+        })
+    }
+}

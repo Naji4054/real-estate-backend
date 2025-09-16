@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addLatest, getAllLatest } from "../controllers/latest.controller.js";
+import { addLatest, deleteLatest, getAllLatest } from "../controllers/latest.controller.js";
 import { body } from "express-validator";
 
 const latestRoutes = Router();
@@ -11,4 +11,5 @@ latestRoutes.post('/add', [
     body('title').not().isEmpty()
 ] ,addLatest)
 
+latestRoutes.delete('/delete/:id',deleteLatest)
 export default latestRoutes;
