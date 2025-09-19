@@ -1,28 +1,24 @@
+import Property from "../models/property"
 
-
-import { validationResult } from 'express-validator'
-import Latest from '../models/latest.js'
-
-export const getAllLatest = async (req, res, next) =>{
+export const getProperty =  async ( req ,res, next ) => {
     try {
-        const data = await Latest.find({})
+        const data = await Property.find({})
         res.status(201).json({
-            status: true,
-            message: '',
-            data
+            stats: true,
+            message :" listing all properties",
+            data 
         })
-    } catch (error) {
+    } catch {
         console.log(error)
         res.status(500).json({
             status: false,
-            message: 'Internal server error',
+            message: "internal server error",
             data: null
         })
     }
 }
 
-
-export const addLatest = async (req, res, next) => {
+export const addProperty = async (req, res, next) => {
     try {
         const error = validationResult(req)
         if (!error.isEmpty()) {
@@ -54,34 +50,6 @@ export const addLatest = async (req, res, next) => {
         }
         
     } catch (error) {
-        console.log(error)
-        res.status(500).json({
-            status: false,
-            message: 'Internal server error',
-            data: null
-        })
-    }
-}
-
-export const deleteLatest = async (req, res, next) => {
-    try {
-        const {id} = req.params;
-        const deleteData = await Latest.findByIdAndDelete(id);
-        if(!deleteData){
-            res.status(404).json({
-                status: false,
-                message:"data not found",
-                data: null
-
-            })
-        } else {
-            res.status(200).json({
-                status: true,
-                message: "deleted successfully",
-                data : deleteData
-            })
-        }
-    }catch(error) {
         console.log(error)
         res.status(500).json({
             status: false,
