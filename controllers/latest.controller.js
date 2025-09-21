@@ -21,7 +21,6 @@ export const getAllLatest = async (req, res, next) =>{
     }
 }
 
-
 export const addLatest = async (req, res, next) => {
     try {
         const error = validationResult(req)
@@ -89,4 +88,4 @@ export const deleteLatest = async (req, res, next) => {
             data: null
         })
     }
-}
+};
