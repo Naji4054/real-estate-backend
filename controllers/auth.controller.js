@@ -50,7 +50,9 @@ export const register = async (req, res, next) => {
                 const expiresIn = process.env.EXPIRES_IN
 
                 console.log(secretKey, expiresIn)
+
                 // sign a new jwt token and send with response
+
                 const token = jwt.sign({ role, status, email }, secretKey, { expiresIn }  )
 
 
@@ -105,10 +107,14 @@ export const login =  async (req, res, next) => {
                         data: null
                     })
                 } else {
+
+                    const loginToken = jwt.sign({ email, password }, secretKey, { expiresIn }  )
+
                     res.status(200).json({
                         status: true,
                         message: 'login successfull',
-                        data: user
+                        data: null,
+                        access_token: loginToken
                     })
                 }
                
@@ -125,3 +131,4 @@ export const login =  async (req, res, next) => {
         
     }
 }
+
