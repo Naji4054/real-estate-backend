@@ -3,6 +3,8 @@ import User from "../models/user.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
+
+
 export const register = async (req, res, next) => {
     try {
         const errors = validationResult(req);
@@ -27,7 +29,8 @@ export const register = async (req, res, next) => {
                     data: null
                 })
             } else {
-
+                const secretKey = process.env.JWT_SECRET_KEY
+                const expiresIn = process.env.EXPIRES_IN
                 // create a hash value for password 
                 const salt = await bcrypt.genSalt(10);
                 const hashPassword = await bcrypt.hash(req.body.password, salt);
@@ -46,8 +49,7 @@ export const register = async (req, res, next) => {
                 await newEntry.save()
                 
 
-                const secretKey = process.env.JWT_SECRET_KEY
-                const expiresIn = process.env.EXPIRES_IN
+            
 
                 console.log(secretKey, expiresIn)
 
@@ -107,7 +109,9 @@ export const login =  async (req, res, next) => {
                         data: null
                     })
                 } else {
-
+                    const secretKey = process.env.JWT_SECRET_KEY
+                    const expiresIn = process.env.EXPIRES_IN    
+                    console.log(secretKey, expiresIn)
                     const loginToken = jwt.sign({ email, password }, secretKey, { expiresIn }  )
 
                     res.status(200).json({
