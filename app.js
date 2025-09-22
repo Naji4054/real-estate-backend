@@ -7,10 +7,9 @@ import orderRoutes from './routes/admin/order.routes.js'
 import agentRoutes from './routes/admin/agents.routes.js'
 import propertyRoutes from './routes/admin/property.routes.js'
 import categoriesRoutes from './routes/categories.routes.js'
-import mongoose from 'mongoose'
 import dotenv from 'dotenv'
-import User from './models/user.js'
 import dbConfig from './config/db.js'
+import authRoutes from './routes/auth.routes.js'
 
 dotenv.config();
 
@@ -29,6 +28,7 @@ app.use('/categories', categoriesRoutes)
 app.use('/api/v1/admin', orderRoutes)
 app.use('/api/v1/admin', agentRoutes)
 app.use('/api/v1/admin/property', propertyRoutes)
+app.use('/api/v1/auth', authRoutes)
 
 
 

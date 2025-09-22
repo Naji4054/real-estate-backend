@@ -28,23 +28,26 @@ export const addProperty = async (req, res, next) => {
                 data: null
             })
         } else {
-            const { image, title, bedroom, washroom, area, category } = req.body
+            const { title, description, price, taxRate, location, category, locationPoint, details, amenities } = req.body
 
 
 
-            const newEntry = new Latest({
-                image,
-                title,
-                bedroom,
-                washroom,
-                area,
-                category
+            const newEntry = new Property({
+                title, 
+                description, 
+                price, 
+                taxRate, 
+                location, 
+                category, 
+                locationPoint, 
+                details, 
+                amenities
             })
             await newEntry.save()
             
             res.status(200).json({
                 status: true,
-                message: 'Latest created successfully',
+                message: 'property created successfully',
                 data: null
             })
         }

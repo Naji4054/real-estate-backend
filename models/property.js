@@ -9,11 +9,33 @@ const propertySchema = new mongoose.Schema({
     actual: { type: Number, default: 0 },
   },
   taxRate: { type: Number, default: 0 },
-  location: {
+  location : { type: String, required: true },
+  category: { type: String, required: true },
+  property: { type: String, enum: ['sale', 'rent'], default : 'sale'},
+  locationPoint: {
     longitude: { type: Number, default: 0 },
     latitude: { type: Number, default: 0 },
   },
+  details: {
+    bedroom: { type: Number, default: 0},
+    washroom: { type: Number, default: 0},
+    area: { type: Number, default: 0},
+    garage: { type: Number, default: 0},
+    garagearea: { type: Number, default: 0},
+
+  },
+  amenities: {
+    furnished: { type: Boolean, defalut: false },
+    kitchen: { type: Boolean, defalut: false },
+    backyard: { type: Boolean, defalut: false },
+    swimmingpool: { type: Boolean, defalut: false },
+    ventilation: { type: Boolean, defalut: false },
+    fireplace: { type: Boolean, defalut: false },
+    elavator: { type: Boolean, defalut: false },
+    garageattached: { type: Boolean, defalut: false },
+  }
   
+
 })
 const Property = mongoose.model('Property', propertySchema);
  
