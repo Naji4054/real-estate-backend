@@ -1,5 +1,7 @@
 import { validationResult } from "express-validator"
 import User from "../models/user.js";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 export const register = async (req, res, next) => {
     try {
@@ -25,11 +27,16 @@ export const register = async (req, res, next) => {
                     data: null
                 })
             } else {
+
+                // create a hash value for password 
+                const salt = await bcrypt.genSalt(10);
+                const hashPassword = await bcrypt.hash(req.body.password, salt);
+
                 const newEntry = new User({
                     firstName, 
                     lastName, 
                     email, 
-                    password, 
+                    password : hashPassword, 
                     status, 
                     role, 
                     dob, 
@@ -37,11 +44,21 @@ export const register = async (req, res, next) => {
                     phone
                 })
                 await newEntry.save()
+                
+
+                const secretKey = process.env.JWT_SECRET_KEY
+                const expiresIn = process.env.EXPIRES_IN
+
+                console.log(secretKey, expiresIn)
+                // sign a new jwt token and send with response
+                const token = jwt.sign({ role, status, email }, secretKey, { expiresIn }  )
+
 
                 res.status(200).json({
                     stauts: true,
                     message: "register successfull",
-                    data: null
+                    data: null,
+                    access_token: token
                 })
             }
         }

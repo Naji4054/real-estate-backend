@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema ({
         dob : {type: Date, required: true},
         country: { type: String, required: true},
         phone: { type: Number, required: true },
-});
+        
+}, { timestamps: true });
 
 
 const User = mongoose.model('User',userSchema)
