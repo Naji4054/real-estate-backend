@@ -72,10 +72,56 @@ export const register = async (req, res, next) => {
     }
 }
 
-export const login = (req, res, next) => {
+export const login =  async (req, res, next) => {
     try {
-        
-    } catch  {
+        const errors = validationResult(req);
+        if (!errors. isEmpty()){
+            console.log(errors.errors)
+            let message = ''
+
+            errors.errors.map(item=> message += item.path + ' is ' + item.msg )
+            
+            res.status(400).json({
+                status: false,
+                message,
+                data: null
+            })
+        }else {
+            const {email, password} = req.body;
+            const user = await User.findOne({email})
+            if(!user) {
+                res.status(404).json({
+                    status: false,
+                    message: "user not found",
+                    data: null
+                })
+            }else {
+               
+                const passwordMatch = await bcrypt.compare(req.body.password, user.password);
+                if(!passwordMatch){
+                    res.status(404).json({
+                        status : false,
+                        message: " invalid password",
+                        data: null
+                    })
+                } else {
+                    res.status(200).json({
+                        status: true,
+                        message: 'login successfull',
+                        data: user
+                    })
+                }
+               
+            }
+        }
+    } catch (error){
+        console.log(error);
+        res.status (500).json ({
+            status: false,
+            message: " internal server error",
+            data: null
+
+        })
         
     }
 }

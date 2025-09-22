@@ -15,7 +15,10 @@ authRoutes.post('/register', [
 
 ] ,register);
 
-authRoutes.post('/login', login)
+authRoutes.post('/login', [
+    body('email').notEmpty(),
+    body('password').notEmpty()
+] ,login)
 
 export default authRoutes
 
