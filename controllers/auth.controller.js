@@ -3,15 +3,20 @@ import User from "../models/user.js";
 
 export const register = async (req, res, next) => {
     try {
-        const error = validationResult(req);
-        if (!error. isEmpty()){
+        const errors = validationResult(req);
+        if (!errors. isEmpty()){
+            console.log(errors.errors)
+            let message = ''
+
+            errors.errors.map(item=> message += item.path + ' is ' + item.msg )
+            
             res.status(400).json({
                 status: false,
-                message: "validation failed",
+                message,
                 data: null
             })
         }else {
-            const { firstName, lastName, email, password, stauts, role, dob, country, phone } = req.body;
+            const { firstName, lastName, email, password, status, role, dob, country, phone } = req.body;
             const existingUser = await User.findOne({ email })
             if (existingUser) {
                 res.status(400).json({
@@ -25,7 +30,7 @@ export const register = async (req, res, next) => {
                     lastName, 
                     email, 
                     password, 
-                    stauts, 
+                    status, 
                     role, 
                     dob, 
                     country, 
