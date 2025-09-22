@@ -10,6 +10,7 @@ import categoriesRoutes from './routes/categories.routes.js'
 import dotenv from 'dotenv'
 import dbConfig from './config/db.js'
 import authRoutes from './routes/auth.routes.js'
+import userRoutes from './routes/user.routes.js'
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ app.use('/api/v1/admin', orderRoutes)
 app.use('/api/v1/admin', agentRoutes)
 app.use('/api/v1/admin/property', propertyRoutes)
 app.use('/api/v1/auth', authRoutes)
+app.use('/api/v1/user', userRoutes)
 
 
 

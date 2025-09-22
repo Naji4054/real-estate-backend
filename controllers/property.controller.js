@@ -8,7 +8,7 @@ export const getProperty =  async ( req ,res, next ) => {
             message :" listing all properties",
             data 
         })
-    } catch {
+    } catch (error){
         console.log(error)
         res.status(500).json({
             status: false,
@@ -43,6 +43,7 @@ export const addProperty = async (req, res, next) => {
                 details, 
                 amenities
             })
+
             await newEntry.save()
             
             res.status(200).json({
@@ -61,3 +62,4 @@ export const addProperty = async (req, res, next) => {
         })
     }
 }
+

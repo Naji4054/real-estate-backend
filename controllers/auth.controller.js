@@ -112,7 +112,7 @@ export const login =  async (req, res, next) => {
                     const secretKey = process.env.JWT_SECRET_KEY
                     const expiresIn = process.env.EXPIRES_IN    
                     console.log(secretKey, expiresIn)
-                    const loginToken = jwt.sign({ email, password }, secretKey, { expiresIn }  )
+                    const loginToken = jwt.sign({ email, role: user.role }, secretKey, { expiresIn }  )
 
                     res.status(200).json({
                         status: true,
