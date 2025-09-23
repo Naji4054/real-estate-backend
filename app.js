@@ -11,6 +11,7 @@ import dotenv from 'dotenv'
 import dbConfig from './config/db.js'
 import authRoutes from './routes/auth.routes.js'
 import userRoutes from './routes/user.routes.js'
+import testRoutes from './routes/test.routes.js'
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.use('/api/v1/admin', agentRoutes)
 app.use('/api/v1/admin/property', propertyRoutes)
 app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/user', userRoutes)
+app.use('/api/test', testRoutes)
 
 
 
