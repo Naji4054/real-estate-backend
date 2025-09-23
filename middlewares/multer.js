@@ -10,9 +10,9 @@ import multer from "multer";
       }
 })
 
- const upload = multer({
+ const upload = multer( {
     storage: storage,
     limits: {fileSize: 1000000}
-}).single('filename');
+}).fields([{name: 'field1'},{name: 'field2'},{name: 'field3'},{name: 'field4'}]);
 
 export default upload;
