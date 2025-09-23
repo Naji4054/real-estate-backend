@@ -22,6 +22,7 @@ app.use(cors())
 dbConfig()
 
 app.use(express.json())
+app.use('/uploads',express.static('uploads'))
 
 app.use('/api/v1/service', serviceRouter)
 app.use('/api/v1/features', featuresRoutes)
