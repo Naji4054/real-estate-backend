@@ -10,6 +10,10 @@ export const fileUpload = ( req, res, next ) => {
                 message: "validation error",
                 data: nul
             })
+            // const newUser = new User({
+            //     profileImage: '/uploads/afjsldkjf.png'
+            // })
+            
         }else {
             res.json({ message: 'test'})
         }
