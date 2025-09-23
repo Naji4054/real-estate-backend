@@ -6,8 +6,9 @@ export const authenticate = async (req, res, next) => {
 
 
     const token = req.headers['authorization'].split(' ')[1]
+
     if (!token) {
-        res.json({
+        res.status(401).json({
             status: false,
             message: "No token found, please login",
             data: null
@@ -22,7 +23,7 @@ export const authenticate = async (req, res, next) => {
             })
         } else {
            
-            const userData = await User.findOne({ email: decodedToken.email }).select('_id status')
+            const userData = await User.findOne({ email: decodedToken.email })
           
             if (!userData || userData.status !== 'active') {
                 res.json({
@@ -32,9 +33,38 @@ export const authenticate = async (req, res, next) => {
                 })
             } else {
                 req.userId = userData._id
+                req.userRole = userData.role
                 next()
             }
         }
     }
    
+}
+
+export const authorize = (authorizedRole) => {
+   
+    return (req, res, next) => {
+        const userRole = req.userRole ;
+        const user = req.userId
+        console.log(userRole,'role'),
+        console.log(user,'user')
+        if(!user || !userRole) {
+            res.status(400) .json({
+                status: false ,
+                message: " user not found" ,
+                data: null
+            })
+        } else {
+            const permission = authorizedRole.includes(userRole);
+            if (!permission) {
+                res.status(400).json({
+                    status : false,
+                    message : "unauthorized access",
+                    data: null
+                })
+            } else {
+                next()
+            }
+        }
+    }
 }
