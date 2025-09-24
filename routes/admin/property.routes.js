@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { getProperty, getPropertyView } from "../../controllers/admin/property.controller.js";
 
-const propertyRoutes = Router()
+const adminPropertyRoutes = Router()
 
-propertyRoutes.get('/',getProperty)
+adminPropertyRoutes.get('/',getProperty)
 
-propertyRoutes.get('/view/:id', getPropertyView)
+adminPropertyRoutes.get('/view/:id', getPropertyView)
 
-export default propertyRoutes;
+export default adminPropertyRoutes;

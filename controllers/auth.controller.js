@@ -62,7 +62,7 @@ export const register = async (req, res, next) => {
                     stauts: true,
                     message: "register successfull",
                     data: null,
-                    access_token: token
+                    token
                 })
             }
         }
