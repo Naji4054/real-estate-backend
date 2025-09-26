@@ -113,11 +113,16 @@ export const login =  async (req, res, next) => {
                     const expiresIn = process.env.EXPIRES_IN    
                     console.log(secretKey, expiresIn)
                     const loginToken = jwt.sign({ email, role: user.role }, secretKey, { expiresIn }  )
+                    const userData = {
+                        email: user.email,
+                        firstName: user.firstName,
+                        lastName: user.lastName
+                    }
 
                     res.status(200).json({
                         status: true,
                         message: 'login successfull',
-                        data: null,
+                        data: userData,
                         access_token: loginToken
                     })
                 }

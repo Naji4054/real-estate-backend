@@ -5,7 +5,8 @@ import jwt from 'jsonwebtoken'
 export const authenticate = async (req, res, next) => {
 
 
-    const token = req.headers['authorization'].split(' ')[1]
+    const token = req?.headers['authorization']?.split(' ')[1]
+    console.log(token)
 
     if (!token) {
         res.status(401).json({
@@ -25,8 +26,8 @@ export const authenticate = async (req, res, next) => {
            
             const userData = await User.findOne({ email: decodedToken.email })
           
-            if (!userData || userData.status !== 'active') {
-                res.json({
+            if (!userData) {
+                res.status(404).json({
                     status: false,
                     message: "No such user found",
                     data: null

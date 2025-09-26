@@ -89,7 +89,7 @@ export const propertyInfo = async( req, res, next ) => {
             })
             await newProperty.save()
 
-            res.json({
+            res.status(200).json({
                 status: true,
                 message: "property info added",
                 data: {
@@ -131,11 +131,13 @@ export const details = async( req, res, next ) => {
             })
            } else {
                 try {
-                    updatedDetails =  await Property.findByIdAndUpdate(propertyId, {details}).exec()
+                    updatedDetails =  await Property.findByIdAndUpdate(propertyId, {details, completed: true }).exec()
                     res.status(200).json({
                         status: true,
                         message: "updated details",
-                        data: null
+                        data: {
+                            propertyId: updatedDetails._id
+                        }
                     })
                 } catch (error) {
                     console.log(error)
@@ -173,15 +175,18 @@ export const location = async( req, res, next ) => {
                   
         } else {
             let updatedLocation;
-            const {propertyId ,locationPoint} = req.body
-            console.log(propertyId, locationPoint, 'test')
+            const {propertyId , latitude, longitude } = req.body
+            
             try {
-                updatedLocation = await Property.findByIdAndUpdate(propertyId, {locationPoint})
+                updatedLocation = await Property.findByIdAndUpdate(propertyId, {locationPoint: { latitude, longitude}}).exec()
                 
                 res.json({
                     status: true,
                     message: "location added",
-                    data: null
+                    data: {
+                        propertyId: updatedLocation?._id
+                    }
+                    
                 })
             } catch (error) {
                 console.error(error, 'err')
@@ -230,11 +235,32 @@ export const media = async( req, res, next ) => {
            let updatedProperty
            try {
             
-                updatedProperty = await Property.findByIdAndUpdate(propertyId, { media }).exec()
-                console.log(updatedProperty)
+                updatedProperty = await Property.findByIdAndUpdate(propertyId, { media }, { new: true }).exec()
+                if (!updatedProperty) {
+                    res.status(404).json({ 
+                        status: false,
+                        message: 'No such property found',
+                        data: null
+                    })
+                } else {
+                    console.log(updatedProperty, 'prop')
+                    res.status(200).json({
+                        status: true,
+                        message: " added media files successfully",
+                        data: {
+                            propertyId: updatedProperty?._id
+                        }
+                    })
+                }
            } catch (error) {
-            console.log('error') 
+            console.log(error) 
+            res.status(400).json({
+                status: false,
+                message: " fialed to add media files",
+                data: null
+            })
             }
+
             
         }
         
