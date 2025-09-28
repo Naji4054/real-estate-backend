@@ -5,7 +5,7 @@ export const getProperty =  async ( req ,res, next ) => {
     try {
         const data = await Property.find({})
         res.status(201).json({
-            stats: true,
+            status: true,
             message :" listing all properties",
             data 
         })
