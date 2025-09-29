@@ -122,7 +122,7 @@ export const details = async( req, res, next ) => {
         } else {
       
             let updatedDetails 
-            const {propertyId , details} = req.body;
+            const {propertyId , details, amenities} = req.body;
            if(!propertyId) {
             res.status(400).json({
                 status: false,
@@ -131,7 +131,7 @@ export const details = async( req, res, next ) => {
             })
            } else {
                 try {
-                    updatedDetails =  await Property.findByIdAndUpdate(propertyId, {details, completed: true }).exec()
+                    updatedDetails =  await Property.findByIdAndUpdate(propertyId, {details, amenities, completed: true }).exec()
                     res.status(200).json({
                         status: true,
                         message: "updated details",
