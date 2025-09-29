@@ -6,7 +6,7 @@ const propertySchema = new mongoose.Schema({
   price: { 
     before: { type: Number, default: 0},
     after: { type: Number, default: 0 },
-    actual: { type: Number, default: 0 },
+    priceExact: { type: Number, default: 0 },
   },
   taxRate: { type: Number, default: 0 },
   location : { type: String, required: true },

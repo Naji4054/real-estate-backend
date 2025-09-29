@@ -1,7 +1,7 @@
 import { validationResult } from "express-validator"
 import Property from "../models/property.js"
 
-export const getProperty =  async ( req ,res, next ) => {
+export const listProperty =  async ( req ,res, next ) => {
     try {
         const data = await Property.find({})
         res.status(201).json({
@@ -77,6 +77,7 @@ export const propertyInfo = async( req, res, next ) => {
         } else {
       
             const { title, description, price, taxRate, location, category, property } = req.body
+            console.log(price, 'price')
             
             const newProperty =  new Property({
                 title,
@@ -123,6 +124,7 @@ export const details = async( req, res, next ) => {
       
             let updatedDetails 
             const {propertyId , details, amenities} = req.body;
+            console.log(propertyId, 'property Id')
            if(!propertyId) {
             res.status(400).json({
                 status: false,
@@ -131,7 +133,7 @@ export const details = async( req, res, next ) => {
             })
            } else {
                 try {
-                    updatedDetails =  await Property.findByIdAndUpdate(propertyId, {details, amenities, completed: true }).exec()
+                    updatedDetails =  await Property.findByIdAndUpdate(propertyId ,{details, amenities, completed: true }).exec()
                     res.status(200).json({
                         status: true,
                         message: "updated details",
@@ -166,6 +168,7 @@ export const location = async( req, res, next ) => {
     try {
         console.log(req.body)
         const errors = validationResult(req);
+        console.log(errors,"errors here")
         if(!errors.isEmpty()) {
             res.status(400).json({
                 status: false,
@@ -175,12 +178,14 @@ export const location = async( req, res, next ) => {
                   
         } else {
             let updatedLocation;
-            const {propertyId , latitude, longitude } = req.body
+            
+            const {propertyId, locationPoint} = req.body
+            console.log(req.body,'loc point')
             
             try {
-                updatedLocation = await Property.findByIdAndUpdate(propertyId, {locationPoint: { latitude, longitude}}).exec()
-                
-                res.json({
+                updatedLocation = await Property.findByIdAndUpdate(propertyId,{locationPoint} ).exec()
+                console.log(updatedLocation,'updated loc')
+                res.status(200).json({
                     status: true,
                     message: "location added",
                     data: {
@@ -226,9 +231,13 @@ export const media = async( req, res, next ) => {
             const { propertyId } = req.body
 
             let media = []
+            console.log(req.files, 'files')
             
             Object.values(req.files).map(file=> {
-                media.push(file[0].path)
+                const assetName = file[0].filename
+                // console.log(file[0].originalname,'media')
+                media.push(`/media/${assetName}`)
+                
                 
             })
 
