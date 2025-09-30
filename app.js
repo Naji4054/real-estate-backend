@@ -15,6 +15,7 @@ import testRoutes from './routes/test.routes.js'
 import propertyRoutes from './routes/property.routes.js'
 import adminPropertyRoutes from './routes/admin/property.routes.js'
 
+
 dotenv.config();
 
 const app = express()
@@ -37,7 +38,6 @@ app.use('/api/v1/property', propertyRoutes)
 app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/user', userRoutes)
 app.use('/api/test', testRoutes)
-
 
 
 app.listen(3000, ()=> {
