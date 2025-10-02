@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addProperty, details, listProperty, location, media, propertyInfo } from "../controllers/property.controller.js";
+import { addProperty, details, emailEnquiry, listProperty, location, media, propertyInfo } from "../controllers/property.controller.js";
 import upload from "../middlewares/multer.js";
 import { authenticate } from "../middlewares/authMiddleware.js";
 import { body } from "express-validator";
@@ -18,5 +18,6 @@ propertyRoutes.post('/add/location' ,[
    
 ], location)
 propertyRoutes.post('/add/details',details)
+propertyRoutes.post('/send-mail',emailEnquiry)
 
 export default propertyRoutes;

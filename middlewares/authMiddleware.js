@@ -35,6 +35,7 @@ export const authenticate = async (req, res, next) => {
             } else {
                 req.userId = userData._id
                 req.userRole = userData.role
+                req.userEmail = userData.email
                 next()
             }
         }

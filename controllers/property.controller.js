@@ -1,5 +1,7 @@
 import { validationResult } from "express-validator"
 import Property from "../models/property.js"
+import { sendMail } from "../config/emailConfig.js";
+import { getEnquiryHtml } from "../templates/enquiryEmail.js";
 
 export const listProperty =  async ( req ,res, next ) => {
     try {
@@ -283,3 +285,42 @@ export const media = async( req, res, next ) => {
     }
 }
 
+
+
+export const emailEnquiry =  async(req, res, next) => {
+    try {
+        console.log(req.body)
+        const errors = validationResult(req);
+        console.log(errors,'errors here')
+        if(!errors.isEmpty()){
+            res.status(400).json({
+                status: false,
+                message: "validation failed , try again!",
+                data: null
+            })
+        } else {
+            const {propertyId} = req.body
+            const  userEmail = req.userEmail
+
+            const propertyData = await Property.findById(propertyId)
+
+            const subject = `New Enquiry on ${propertyData.title}`
+
+            const htmlBody = getEnquiryHtml(propertyData, userEmail, subject )
+        
+            const info = await sendMail(subject, htmlBody); 
+            res.status(200).json({
+                status: true,
+                message: "Test email sent successfully!"
+            });
+
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            status: false,
+            message: "Internal server error",
+            data: null
+        })
+    }
+}

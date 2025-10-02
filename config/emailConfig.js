@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 
 // config from nodemailer documnetation
 export const sendMail = async (subject, htmlBody) => {
-    // subject and body passed from controller 
+// subject and body passed from controller 
     const info = await transporter.sendMail({
         from: '"Maddison Foo Koch" <maddison53@ethereal.email>',
         to: "test1@gmail.com",
