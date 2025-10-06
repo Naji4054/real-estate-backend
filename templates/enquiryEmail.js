@@ -109,5 +109,7 @@ export const getEnquiryHtml = (propertyData, userEmail,subject)=> {
     </html>
     `;
 
+    
+
     return htmlBody;
 }
