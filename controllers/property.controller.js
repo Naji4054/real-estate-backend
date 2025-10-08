@@ -5,7 +5,78 @@ import { getEnquiryHtml } from "../templates/enquiryEmail.js";
 
 export const listProperty =  async ( req ,res, next ) => {
     try {
-        const data = await Property.find({})
+        
+        const { filters, searchValue, page = 1, limit = 10 } = req.body
+       
+        const skipValue = (page - 1 )* limit
+        const filterQuery = {}
+
+        if (searchValue && searchValue.trim() !== '') {
+            filterQuery.$or = [
+                { title: { $regex: searchValue.trim(), $options: 'i' } }, // Case-insensitive search on title
+                { category: { $regex: searchValue.trim(), $options: 'i' } } // Case-insensitive search on category
+            ]
+        }
+   // --- 2. CHECKBOX FILTERS (Property Type, Location, Sell/Rent) ---
+
+        // Property Type (maps to 'category' in model)
+        if (filters?.category && filters.category.length > 0) {
+            filterQuery.category = { $in: filters.category };
+        }
+
+        // Location
+        if (filters?.location && filters.location.length > 0) {
+            filterQuery.location = { $in: filters.location };
+        }
+
+        // Sell / Rent (maps to 'property' in model)
+        if (filters?.property && filters.property.length > 0) {
+            filterQuery.property = { $in: filters.property };
+        }
+
+
+        // --- 3. PRICE RANGE FILTER ---
+        if (filters?.price && filters.price.length === 2) {
+            const [minPrice, maxPrice] = filters.price;
+            // Filter by the exact price field
+            filterQuery['price.priceExact'] = { 
+                $gte: minPrice, 
+                $lte: maxPrice 
+            };
+        }
+
+
+        // --- 4. AMENITIES FILTER ---
+        if (filters?.amenities && filters.amenities.length > 0) {
+            // For amenities, we need an AND condition for each selected amenity
+            // For example, if 'furnished' and 'backyard' are selected, 
+            // the property must have both amenities: { 'amenities.furnished': true, 'amenities.backyard': true }
+            
+            const amenityConditions = filters.amenities.map(amenity => ({
+                [`amenities.${amenity}`]: true
+            }));
+
+            // Use $and to combine existing $or search with new amenity conditions
+            // Or just add them directly if no $or search is present
+            if (filterQuery.$or) {
+                // If $or exists (from search), we wrap the whole query in $and
+                filterQuery.$and = [
+                    { $or: filterQuery.$or },
+                    ...amenityConditions
+                ];
+                delete filterQuery.$or; // Remove the original $or condition
+            } else {
+                // Otherwise, simply add the amenity conditions to the main filterQuery
+                Object.assign(filterQuery, ...amenityConditions);
+            }
+        }
+        
+        console.log('Final Filter Query:', filterQuery);
+
+
+        const data = await Property.find(filterQuery)
+        .sort({ createdAt: -1}).skip(skipValue).limit(limit)
+
         res.status(201).json({
             status: true,
             message :" listing all properties",
@@ -322,5 +393,13 @@ export const emailEnquiry =  async(req, res, next) => {
             message: "Internal server error",
             data: null
         })
+    }
+}
+
+export const search = async (req, res, next)=> {
+    try {
+        
+    } catch (error) {
+        
     }
 }

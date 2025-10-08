@@ -6,7 +6,7 @@ import { body } from "express-validator";
 
 const propertyRoutes = Router()
 
-propertyRoutes.get('/list', listProperty),
+propertyRoutes.post('/list', listProperty),
 
 propertyRoutes.use(authenticate)
 propertyRoutes.post('/add',addProperty)
