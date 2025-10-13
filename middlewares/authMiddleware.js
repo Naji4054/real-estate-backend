@@ -17,7 +17,7 @@ export const authenticate = async (req, res, next) => {
     } else {
         let decodedToken  = jwt.verify(token, process.env.JWT_SECRET_KEY)
         if (!decodedToken) {
-            res.json({
+            res.status(401).json({
                 status: false,
                 message: "Invalid token, Please login",
                 data: null
@@ -27,7 +27,7 @@ export const authenticate = async (req, res, next) => {
             const userData = await User.findOne({ email: decodedToken.email })
           
             if (!userData) {
-                res.status(404).json({
+                res.status(401).json({
                     status: false,
                     message: "No such user found",
                     data: null

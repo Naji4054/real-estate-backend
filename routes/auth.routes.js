@@ -8,11 +8,7 @@ authRoutes.post('/register', [
     body('firstName').notEmpty().withMessage('First name is required'),
     body('lastName').notEmpty(),
     body('email').notEmpty(),
-    body('password').notEmpty(),
-    body('dob').notEmpty(),
-    body('country').notEmpty().withMessage('Country is a required field'),
-    body('phone').notEmpty()
-
+    body('password').notEmpty()
 ] ,register);
 
 authRoutes.post('/login', [
@@ -20,5 +16,5 @@ authRoutes.post('/login', [
     body('password').notEmpty()
 ] ,login)
 
-export default authRoutes
+export default authRoutes;
 
